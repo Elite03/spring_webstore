@@ -2,16 +2,20 @@ package com.java.local.main.model.domain.repo.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
+import com.java.local.main.api.FilteredProduct;
 import com.java.local.main.model.domain.Product;
 import com.java.local.main.model.domain.repo.ProductRepositiry;
 
 @Repository
-public class ProductRepositiryImpl implements ProductRepositiry {
+public class ProductRepositiryImpl extends FilteredProduct implements ProductRepositiry {
 
 	private List<Product> productList;
 
@@ -69,6 +73,22 @@ public class ProductRepositiryImpl implements ProductRepositiry {
 	public List<Product> getProductByCategory(String productCategory) {
 		return productList.stream().filter(product -> product.getCategory().equalsIgnoreCase(productCategory))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public Set<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
+		Set<String> criteria = filterParams.keySet();
+		Set<Product> finalSet = new HashSet<>();
+		if (criteria.contains("brand"))
+			finalSet.addAll(this.checkProductByManf(productList, "brand", filterParams));
+		if (criteria.contains("category"))
+			finalSet.addAll(this.getMatrixProductsByCategory(productList, "category", filterParams));
+		if (criteria.contains("low")) {
+		}
+		if (criteria.contains("highPrice")) {
+
+		}
+		return null;
 	}
 
 }
