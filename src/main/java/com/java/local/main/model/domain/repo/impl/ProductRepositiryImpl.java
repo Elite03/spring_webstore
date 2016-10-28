@@ -99,4 +99,9 @@ public class ProductRepositiryImpl extends FilteredProduct implements ProductRep
 		return finalSet;
 	}
 
+	@Override
+	public void addProduct(Product product) {
+		productList.add(product);
+	}
+
 }
