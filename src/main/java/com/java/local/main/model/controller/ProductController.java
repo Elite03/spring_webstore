@@ -1,5 +1,8 @@
 package com.java.local.main.model.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,14 @@ public class ProductController {
 	@RequestMapping("/products/{byCategory}")
 	public String productsByCategory(@PathVariable("byCategory") String productCategory, Model model) {
 		model.addAttribute("products", productService.getProductByCategory(productCategory));
+		return "products";
+	}
+
+	@RequestMapping(value = "/filter/{byCriteria}")
+	public String getProdutsByFilter(@MatrixVariable(pathVar = "byCriteria") Map<String, List<String>> filterParms,
+			Model model) {
+		model.addAttribute(productService.getProductsByFilter(filterParms));
+		System.out.println(productService.getProductsByFilter(filterParms));
 		return "products";
 	}
 }
