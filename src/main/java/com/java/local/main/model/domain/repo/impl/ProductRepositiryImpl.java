@@ -79,16 +79,24 @@ public class ProductRepositiryImpl extends FilteredProduct implements ProductRep
 	public Set<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
 		Set<String> criteria = filterParams.keySet();
 		Set<Product> finalSet = new HashSet<>();
-		if (criteria.contains("brand"))
-			finalSet.addAll(this.checkProductByManf(productList, "brand", filterParams));
-		if (criteria.contains("category"))
-			finalSet.addAll(this.getMatrixProductsByCategory(productList, "category", filterParams));
-		if (criteria.contains("low")) {
+		if (criteria.contains("brand")) {
+			for (Product product : productList) {
+				for (String brand : filterParams.get("brand")) {
+					if (brand.equalsIgnoreCase(product.getManufacturer()))
+						finalSet.add(product);
+				}
+			}
 		}
-		if (criteria.contains("highPrice")) {
-
+		if (criteria.contains("category")) {
+			for (Product product : productList) {
+				for (String category : filterParams.get("category")) {
+					finalSet.add(product.getManufacturer().equalsIgnoreCase(category) ? product : null);
+				}
+			}
 		}
-		return null;
+		if (finalSet.isEmpty())
+			throw new IllegalArgumentException("Not found ");
+		return finalSet;
 	}
 
 }
