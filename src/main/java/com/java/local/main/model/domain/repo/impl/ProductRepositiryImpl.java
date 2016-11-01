@@ -10,12 +10,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
-import com.java.local.main.api.FilteredProduct;
 import com.java.local.main.model.domain.Product;
 import com.java.local.main.model.domain.repo.ProductRepositiry;
 
 @Repository
-public class ProductRepositiryImpl extends FilteredProduct implements ProductRepositiry {
+public class ProductRepositiryImpl implements ProductRepositiry {
 
 	private List<Product> productList;
 
