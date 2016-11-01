@@ -17,4 +17,5 @@
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="classpath:messages" />
 	</bean>
+
 </beans>
