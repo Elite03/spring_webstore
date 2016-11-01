@@ -7,5 +7,4 @@ com\java\local\main\model\domain\repo\impl\ProductRepositiryImpl.class
 com\java\local\main\model\domain\repo\ProductRepositiry.class
 com\java\local\main\model\order\service\OrderService.class
 com\java\local\main\welcome\HomeController.class
-com\java\local\main\api\FilteredProduct.class
 com\java\local\main\model\domain\service\impl\ProductServiceImpl.class
