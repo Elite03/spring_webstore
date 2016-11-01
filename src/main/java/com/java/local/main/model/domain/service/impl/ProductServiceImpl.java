@@ -37,4 +37,9 @@ public class ProductServiceImpl implements ProductService {
 		return productRepositiry.getProductsByFilter(filterParams);
 	}
 
+	@Override
+	public void addProduct(Product product) {
+		productRepositiry.addProduct(product);
+	}
+
 }

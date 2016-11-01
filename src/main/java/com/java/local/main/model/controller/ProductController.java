@@ -6,11 +6,18 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.MatrixVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.java.local.main.model.domain.Product;
 import com.java.local.main.model.domain.service.ProductService;
 
 @Controller
@@ -41,8 +48,30 @@ public class ProductController {
 
 	@RequestMapping("/product")
 	public String getById(@RequestParam("id") String productId, Model model) {
-		productService.getProductById(productId);
+		System.out.println(productService.getProductById(productId));
 		model.addAttribute("product", productService.getProductById(productId));
 		return "product";
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String addProduct_GET(Model model) {
+		Product product = new Product();
+		model.addAttribute("newProduct", product);
+		return "addProduct";
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public String addProduct_Post(@ModelAttribute("newProduct") Product product, BindingResult result) {
+		String[] suppressedFeilds = result.getSuppressedFields();
+		if (suppressedFeilds.length > 0)
+			throw new RuntimeException("Attempting to bind disallowed fields: "
+					+ StringUtils.arrayToCommaDelimitedString(suppressedFeilds));
+		productService.addProduct(product);
+		return "redirect:/";
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.setDisallowedFields("unitsInOrder", "discontinued");
 	}
 }
