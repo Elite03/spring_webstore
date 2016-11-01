@@ -24,7 +24,7 @@ tstrap.min.css">
 				<legend>Add new product</legend>
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-2" for="productId"><spring:message
-							code="addProduct.form.label.ProductId.label" /> </label>
+							code="addProduct.form.label.ProductId.label"></spring:message></label>
 					<div class="col-lg-10">
 						<form:input id="productId" path="productId" type="text"
 							class="form:input-large" />
