@@ -30,7 +30,7 @@
 		<property name="defaultViews">
 			<list>
 				<ref bean="jsonView" />
-				<ref bean="xmlView" />
+				<!-- <ref bean="xmlView" /> -->
 			</list>
 		</property>
 	</bean>
@@ -39,17 +39,17 @@
 		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
 		<property name="prettyPrint" value="true" />
 	</bean>
-	<bean id="xmlView"
-		class="org.springframework.web.servlet.view.xml.MarshallingView">
-		<constructor-arg>
-			<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
-				<property name="classesToBeBound">
-					<list>
-						<value>com.java.local.main.model.domain.Product</value>
-					</list>
-				</property>
-			</bean>
-		</constructor-arg>
+	<!-- <bean id="xmlView" -->
+	<!-- class="org.springframework.web.servlet.view.xml.MarshallingView"> -->
+	<!-- <constructor-arg> -->
+	<!-- <bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller"> -->
+	<!-- <property name="classesToBeBound"> -->
+	<!-- <list> -->
+	<!-- <value>com.java.local.main.model.domain.Product</value> -->
+	<!-- </list> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+	<!-- </constructor-arg> -->
 
-	</bean>
+	<!-- </bean> -->
 </beans>

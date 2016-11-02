@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.java.local.main.model.domain.Product;
 import com.java.local.main.model.domain.repo.ProductRepositiry;
+import com.java.local.main.model.exception.NoProductFound;
 
 @Repository
 public class ProductRepositiryImpl implements ProductRepositiry {
@@ -61,11 +62,10 @@ public class ProductRepositiryImpl implements ProductRepositiry {
 
 	@Override
 	public Product getProductById(String productId) {
-
 		return productList.stream()
 				.filter(product -> product != null && product.getProductId() != null
 						&& product.getProductId().equals(productId))
-				.findFirst().orElseThrow(() -> new IllegalStateException("Product not found with id " + productId));
+				.findFirst().orElseThrow(() -> new NoProductFound("No product found with id " + productId));
 	}
 
 	@Override

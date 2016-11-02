@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.java.local.main.model.domain.Product;
 import com.java.local.main.model.domain.service.ProductService;
+import com.java.local.main.model.exception.NoProductFound;
 import com.java.local.main.model.exception.NoProductFoundUnderCategory;
 
 @Controller
@@ -93,5 +95,13 @@ public class ProductController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.setDisallowedFields("unitsInOrder", "discontinued");
+	}
+
+	@ExceptionHandler(NoProductFound.class)
+	public String errorHandler(Model model, NoProductFound execption, HttpServletRequest request) {
+		model.addAttribute("invalidProductId", execption.getMessage());
+		model.addAttribute("exception", execption);
+		model.addAttribute("url", request.getRequestURL() + "?" + request.getQueryString());
+		return "productNotFound";
 	}
 }
