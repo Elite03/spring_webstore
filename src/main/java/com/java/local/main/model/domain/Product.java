@@ -3,6 +3,8 @@ package com.java.local.main.model.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -17,6 +19,7 @@ public class Product implements Serializable {
 	protected long unitsInOrder;
 	protected boolean discontinued;
 	protected String condition;
+	protected MultipartFile productImage;
 
 	public Product() {
 	}
@@ -177,6 +180,14 @@ public class Product implements Serializable {
 				+ description + ", manufacturer=" + manufacturer + ", category=" + category + ", unitsInStock="
 				+ unitsInStock + ", unitsInOrder=" + unitsInOrder + ", discontinued=" + discontinued + ", condition="
 				+ condition + "]";
+	}
+
+	public MultipartFile getProductImage() {
+		return productImage;
+	}
+
+	public void setProductImage(MultipartFile productImage) {
+		this.productImage = productImage;
 	}
 
 }
