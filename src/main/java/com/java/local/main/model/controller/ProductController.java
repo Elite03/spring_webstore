@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.java.local.main.model.domain.Product;
 import com.java.local.main.model.domain.service.ProductService;
+import com.java.local.main.model.exception.NoProductFoundUnderCategory;
 
 @Controller
 public class ProductController {
@@ -39,6 +40,9 @@ public class ProductController {
 
 	@RequestMapping("/products/{byCategory}")
 	public String productsByCategory(@PathVariable("byCategory") String productCategory, Model model) {
+		List<Product> products = productService.getProductByCategory(productCategory);
+		if (products.isEmpty() || products.size() <= 0 || products.contains(null))
+			throw new NoProductFoundUnderCategory();
 		model.addAttribute("products", productService.getProductByCategory(productCategory));
 		return "products";
 	}
@@ -75,7 +79,7 @@ public class ProductController {
 		if (suppressedFeilds.length > 0)
 			throw new RuntimeException("Attempting to bind disallowed fields: "
 					+ StringUtils.arrayToCommaDelimitedString(suppressedFeilds));
-		if (imageFile != null & !imageFile.isEmpty()) {
+		if (imageFile != null && !imageFile.isEmpty()) {
 			try {
 				imageFile.transferTo(new File(rootPath + "\\images\\" + product.getProductId() + ".png"));
 			} catch (IllegalStateException | IOException e) {
