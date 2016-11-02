@@ -10,6 +10,7 @@
 	<mvc:annotation-driven enable-matrix-variables="true" />
 
 	<mvc:resources location="/images/" mapping="image/**" />
+	<mvc:resources location="/pdf/" mapping="pdf/**" />
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/views/" />

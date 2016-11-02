@@ -41,10 +41,10 @@ public class ProductRepositiryImpl implements ProductRepositiry {
 
 		Product tablet = new Product();
 		tablet.setName("Nexus 7");
-		tablet.setProductId("P12346");
+		tablet.setProductId("P1236");
 		tablet.setUnitPrice(new BigDecimal(599));
 		tablet.setDescription(
-				"Google Nexus 7 is the lightest 7 inch tablet With a quad-core Qualcomm Snapdragon™ S4 Pro processor");
+				"Google Nexus 7 is the lightest 7 inch tablet With a quad-core Qualcomm Snapdragonï¿½ S4 Pro processor");
 		tablet.setCategory("Tablet");
 		tablet.setManufacturer("Google");
 		tablet.setUnitsInStock(1000);
