@@ -22,21 +22,18 @@ public class PerformanceMonitorInterceptor implements HandlerInterceptor {
 		long startTime = (long) request.getAttribute("startTime");
 		logger.info(
 				"Total time taken by request to complete the request" + ((endTime - startTime) / 1000) + " seconds");
-		System.out.println((endTime - startTime) / 1000);
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object, ModelAndView view)
 			throws Exception {
 		logger.info("Request Processing ended on " + this.getCurrentTime());
-		System.out.println(this.getCurrentTime());
 
 	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
 		long startTime = System.currentTimeMillis();
-		System.out.println(this.getCurrentTime());
 		logger.info("Request URL : " + request.getRequestURL().toString() + " started at " + this.getCurrentTime());
 		request.setAttribute("startTime", startTime);
 		return true;

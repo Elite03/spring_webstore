@@ -3,32 +3,19 @@ package com.java.local.main.model.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.java.local.main.validator.ProductId;
-
 @XmlRootElement
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Pattern(regexp = "P[0-9]+", message = "{Pattern.Product.productId.validation}")
-	@ProductId
 	protected String productId;
-
-	@Size(min = 4, message = "{Size.Product.name.validation}")
 	protected String name;
-
-	// @Digits( = 8, fraction = 2, message =
-	// // "{Digits.Product.unitPrice.validation}")
-	// @NotNull(message = "{NotNull.Product.unitPrice.validation}")
-	// @Size(min = 4, message = "{Size.Product.unitPrice.validation}")
 	protected BigDecimal unitPrice;
 	protected String description;
 	protected String manufacturer;

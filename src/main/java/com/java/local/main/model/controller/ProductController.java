@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,16 +27,12 @@ import com.java.local.main.model.domain.Product;
 import com.java.local.main.model.domain.service.ProductService;
 import com.java.local.main.model.exception.NoProductFound;
 import com.java.local.main.model.exception.NoProductFoundUnderCategory;
-import com.java.local.main.validator.UnitsInStockValidator;
 
 @Controller
 public class ProductController {
 
 	@Autowired
-	private ProductService productService;
-
-	@Autowired
-	private UnitsInStockValidator unitsInStockValidator;
+	ProductService productService;
 
 	@RequestMapping(value = "/")
 	public String getAllProducts(Model model) {
@@ -77,10 +72,8 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addProduct_Post(@ModelAttribute("newProduct") @Valid Product product, BindingResult result,
+	public String addProduct_Post(@ModelAttribute("newProduct") Product product, BindingResult result,
 			HttpServletRequest request) {
-		if (result.hasErrors())
-			return "addProduct";
 		MultipartFile imageFile = product.getProductImage();
 		String[] suppressedFeilds = result.getSuppressedFields();
 		String rootPath = request.getServletContext().getRealPath("/");
@@ -102,7 +95,6 @@ public class ProductController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.setDisallowedFields("unitsInOrder", "discontinued");
-		binder.setValidator(unitsInStockValidator);
 	}
 
 	@ExceptionHandler(NoProductFound.class)
