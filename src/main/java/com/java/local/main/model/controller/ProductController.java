@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,7 +54,6 @@ public class ProductController {
 	public String getProdutsByFilter(@MatrixVariable(pathVar = "byCriteria") Map<String, List<String>> filterParms,
 			Model model) {
 		model.addAttribute(productService.getProductsByFilter(filterParms));
-		System.out.println(productService.getProductsByFilter(filterParms));
 		return "products";
 	}
 
@@ -72,8 +72,10 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addProduct_Post(@ModelAttribute("newProduct") Product product, BindingResult result,
+	public String addProduct_Post(@ModelAttribute("newProduct") @Valid Product product, BindingResult result,
 			HttpServletRequest request) {
+		if (result.hasErrors())
+			return "addProduct";
 		MultipartFile imageFile = product.getProductImage();
 		String[] suppressedFeilds = result.getSuppressedFields();
 		String rootPath = request.getServletContext().getRealPath("/");

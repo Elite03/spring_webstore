@@ -6,13 +6,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.validation.Constraint;
 import javax.validation.Payload;
 
+@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.ANNOTATION_TYPE, ElementType.FIELD })
 @Documented
+@Constraint(validatedBy = ProductIdValidator.class)
 public @interface ProductId {
-	String message() default "{com.webstore.ProductId.Message}";
+	String message() default "{com.webstore.product.productId}";
 
 	Class<?>[] groups() default {};
 

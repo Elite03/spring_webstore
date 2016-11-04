@@ -13,17 +13,21 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.java.local.main.validator.ProductId;
+
 @XmlRootElement
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Pattern(regexp = "P[0-9]+", message = "{Pattern.domain.productId.Product.validation}")
+	@ProductId
 	protected String productId;
 	@NotNull(message = "{NotNull.domain.name.Product.validation}")
 	@Size(min = 4, message = "{Size.domain.name.Product.validation}")
-	@Pattern(regexp = "[A-Z][a-z]", message = "{Pattern.domain.name.Product.validation}")
+	@Pattern(regexp = "[A-Z]+[a-z]+", message = "{Pattern.domain.name.Product.validation}")
 	protected String name;
+
 	@NotNull(message = "{NotNull.domain.unitPrice.Product.validaton}")
 	@Digits(integer = 30, fraction = 2, message = "{Digits.domain.unitPrice.Product.validation}")
 	protected BigDecimal unitPrice;

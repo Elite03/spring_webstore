@@ -12,7 +12,7 @@ import com.java.local.main.model.exception.NoProductFound;
 public class ProductIdValidator implements ConstraintValidator<ProductId, String> {
 
 	@Autowired
-	private ProductService productService;
+	ProductService productService;
 
 	@Override
 	public void initialize(ProductId productId) {
@@ -20,14 +20,17 @@ public class ProductIdValidator implements ConstraintValidator<ProductId, String
 	}
 
 	@Override
-	public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
+	public boolean isValid(String productId, ConstraintValidatorContext constraintValidatorContext) {
+
 		Product product;
 		try {
-			product = productService.getProductById(value);
+			product = productService.getProductById(productId);
 		} catch (NoProductFound ex) {
 			return true;
 		}
-		return product != null ? false : true;
-	}
+		if (product != null)
+			return false;
+		return true;
 
+	}
 }
