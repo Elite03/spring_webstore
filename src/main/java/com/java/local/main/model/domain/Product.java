@@ -3,6 +3,10 @@ package com.java.local.main.model.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -14,8 +18,14 @@ public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Pattern(regexp = "P[0-9]+", message = "{Pattern.domain.productId.Product.validation}")
 	protected String productId;
+	@NotNull(message = "{NotNull.domain.name.Product.validation}")
+	@Size(min = 4, message = "{Size.domain.name.Product.validation}")
+	@Pattern(regexp = "[A-Z][a-z]", message = "{Pattern.domain.name.Product.validation}")
 	protected String name;
+	@NotNull(message = "{NotNull.domain.unitPrice.Product.validaton}")
+	@Digits(integer = 30, fraction = 2, message = "{Digits.domain.unitPrice.Product.validation}")
 	protected BigDecimal unitPrice;
 	protected String description;
 	protected String manufacturer;
