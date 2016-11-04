@@ -25,7 +25,7 @@ public class Product implements Serializable {
 	protected String productId;
 	@NotNull(message = "{NotNull.domain.name.Product.validation}")
 	@Size(min = 4, message = "{Size.domain.name.Product.validation}")
-	@Pattern(regexp = "[A-Z]+[a-z]+", message = "{Pattern.domain.name.Product.validation}")
+	@Pattern(regexp = "[A-Za-z]+", message = "{Pattern.domain.name.Product.validation}")
 	protected String name;
 
 	@NotNull(message = "{NotNull.domain.unitPrice.Product.validaton}")
