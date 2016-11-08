@@ -19,7 +19,7 @@ public class UnitsInStockValidator implements Validator {
 	@Override
 	public void validate(Object object, Errors errors) {
 		Product product = (Product) object;
-		if (product.getUnitPrice() != null && new BigDecimal(10000).compareTo(product.getUnitPrice()) <= 0
+		if (product.getUnitPrice() != null && new BigDecimal(10000).compareTo(product.getUnitPrice()) >= 0
 				&& product.getUnitsInStock() > 99)
 			errors.rejectValue("unitsInStock", "com.webstore.validator.UnitsInStockValidator.message");
 	}
