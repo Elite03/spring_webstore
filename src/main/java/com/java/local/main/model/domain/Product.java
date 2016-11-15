@@ -11,17 +11,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.java.local.main.validator.ProductId;
+import com.java.local.validatons.anno.Category;
+import com.java.local.validatons.anno.ProductId;
 
 @XmlRootElement
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Pattern(regexp = "P[0-9]+", message = "{Pattern.domain.productId.Product.validation}")
 	@ProductId
+	@Pattern(regexp = "P[0-9]+", message = "{Pattern.domain.productId.Product.validation}")
 	protected String productId;
 	@NotNull(message = "{NotNull.domain.name.Product.validation}")
 	@Size(min = 4, message = "{Size.domain.name.Product.validation}")
@@ -31,10 +34,18 @@ public class Product implements Serializable {
 	@NotNull(message = "{NotNull.domain.unitPrice.Product.validaton}")
 	@Digits(integer = 30, fraction = 2, message = "{Digits.domain.unitPrice.Product.validation}")
 	protected BigDecimal unitPrice;
+	@NotNull(message = "Description cannot be empty")
 	protected String description;
+
+	@NotNull(message = "manufacturer cannot be empty")
 	protected String manufacturer;
+
+	@Category
+	@NotBlank(message = "cannot be empty")
 	protected String category;
+
 	protected long unitsInStock;
+
 	protected long unitsInOrder;
 	protected boolean discontinued;
 	protected String condition;
