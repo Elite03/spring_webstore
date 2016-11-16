@@ -29,7 +29,7 @@ public class ProductRepositiryImpl implements ProductRepositiry {
 		iPhome.setDescription("Apple iPhone 6s smartphone with 5.5-inch 640x1136 display and 8-megapixel rear camera");
 		iPhome.setCategory("Smart Phone");
 		iPhome.setManufacturer("Apple");
-		iPhome.setUnitsInStock(1000);
+		iPhome.setUnitsInStock((long) 1000);
 
 		Product laptopDell = new Product();
 		laptopDell.setProductId("P1235");
@@ -38,7 +38,7 @@ public class ProductRepositiryImpl implements ProductRepositiry {
 		laptopDell.setDescription("Dell Inspiron 14-inch Laptop (Black) with 5th Generation Intel Core processors");
 		laptopDell.setCategory("laptop");
 		laptopDell.setManufacturer("Dell");
-		laptopDell.setUnitsInStock(1000);
+		laptopDell.setUnitsInStock((long) 1000);
 
 		Product tablet = new Product();
 		tablet.setName("Nexus 7");
@@ -48,7 +48,7 @@ public class ProductRepositiryImpl implements ProductRepositiry {
 				"Google Nexus 7 is the lightest 7 inch tablet With a quad-core Qualcomm Snapdragon� S4 Pro processor");
 		tablet.setCategory("Tablet");
 		tablet.setManufacturer("Google");
-		tablet.setUnitsInStock(1000);
+		tablet.setUnitsInStock((long) 1000);
 
 		productList.add(iPhome);
 		productList.add(laptopDell);

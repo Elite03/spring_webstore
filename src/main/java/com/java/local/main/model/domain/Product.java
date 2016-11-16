@@ -11,8 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.java.local.validatons.anno.Category;
@@ -40,11 +38,12 @@ public class Product implements Serializable {
 	@NotNull(message = "manufacturer cannot be empty")
 	protected String manufacturer;
 
-	@Category
-	@NotBlank(message = "cannot be empty")
+	@Category(message = "category is not defined")
+	@NotNull(message = "cannot be empty")
 	protected String category;
 
-	protected long unitsInStock;
+	@NotNull(message = "Stock cannot be empty")
+	protected Long unitsInStock;
 
 	protected long unitsInOrder;
 	protected boolean discontinued;
@@ -103,14 +102,6 @@ public class Product implements Serializable {
 		this.category = category;
 	}
 
-	public long getUnitsInStock() {
-		return unitsInStock;
-	}
-
-	public void setUnitsInStock(long unitsInStock) {
-		this.unitsInStock = unitsInStock;
-	}
-
 	public long getUnitsInOrder() {
 		return unitsInOrder;
 	}
@@ -136,6 +127,31 @@ public class Product implements Serializable {
 	}
 
 	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", name=" + name + ", unitPrice=" + unitPrice + ", description="
+				+ description + ", manufacturer=" + manufacturer + ", category=" + category + ", unitsInStock="
+				+ unitsInStock + ", unitsInOrder=" + unitsInOrder + ", discontinued=" + discontinued + ", condition="
+				+ condition + "]";
+	}
+
+	@XmlTransient
+	public MultipartFile getProductImage() {
+		return productImage;
+	}
+
+	public void setProductImage(MultipartFile productImage) {
+		this.productImage = productImage;
+	}
+
+	public Long getUnitsInStock() {
+		return unitsInStock;
+	}
+
+	public void setUnitsInStock(Long unitsInStock) {
+		this.unitsInStock = unitsInStock;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -146,9 +162,10 @@ public class Product implements Serializable {
 		result = prime * result + ((manufacturer == null) ? 0 : manufacturer.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
+		result = prime * result + ((productImage == null) ? 0 : productImage.hashCode());
 		result = prime * result + ((unitPrice == null) ? 0 : unitPrice.hashCode());
 		result = prime * result + (int) (unitsInOrder ^ (unitsInOrder >>> 32));
-		result = prime * result + (int) (unitsInStock ^ (unitsInStock >>> 32));
+		result = prime * result + ((unitsInStock == null) ? 0 : unitsInStock.hashCode());
 		return result;
 	}
 
@@ -193,6 +210,11 @@ public class Product implements Serializable {
 				return false;
 		} else if (!productId.equals(other.productId))
 			return false;
+		if (productImage == null) {
+			if (other.productImage != null)
+				return false;
+		} else if (!productImage.equals(other.productImage))
+			return false;
 		if (unitPrice == null) {
 			if (other.unitPrice != null)
 				return false;
@@ -200,26 +222,12 @@ public class Product implements Serializable {
 			return false;
 		if (unitsInOrder != other.unitsInOrder)
 			return false;
-		if (unitsInStock != other.unitsInStock)
+		if (unitsInStock == null) {
+			if (other.unitsInStock != null)
+				return false;
+		} else if (!unitsInStock.equals(other.unitsInStock))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Product [productId=" + productId + ", name=" + name + ", unitPrice=" + unitPrice + ", description="
-				+ description + ", manufacturer=" + manufacturer + ", category=" + category + ", unitsInStock="
-				+ unitsInStock + ", unitsInOrder=" + unitsInOrder + ", discontinued=" + discontinued + ", condition="
-				+ condition + "]";
-	}
-
-	@XmlTransient
-	public MultipartFile getProductImage() {
-		return productImage;
-	}
-
-	public void setProductImage(MultipartFile productImage) {
-		this.productImage = productImage;
 	}
 
 }

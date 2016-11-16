@@ -11,8 +11,8 @@ import javax.validation.Payload;
 
 import com.java.local.validatons.anno.validators.CategoryValidator;
 
-@Target({ ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE })
 @Documented
 @Constraint(validatedBy = CategoryValidator.class)
 public @interface Category {

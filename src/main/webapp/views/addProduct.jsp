@@ -59,6 +59,7 @@ tstrap.min.css">
 					<div class="col-lg-10">
 						<form:input id="manufacturer" path="manufacturer" type="text"
 							class="form:input-large" />
+						<form:errors cssClass="text-danger" path="manufacturer"></form:errors>
 					</div>
 				</div>
 				<div class="form-group">
@@ -67,6 +68,7 @@ tstrap.min.css">
 					<div class="col-lg-10">
 						<form:input id="category" path="category" type="text"
 							class="form:input-large" />
+						<form:errors cssClass="text-danger" path="category"></form:errors>
 					</div>
 				</div>
 				<div class="form-group">
@@ -75,6 +77,7 @@ tstrap.min.css">
 					<div class="col-lg-10">
 						<form:input id="unitsInStock" path="unitsInStock" type="text"
 							class="form:input-large" />
+						<form:errors cssClass="text-danger" path="unitsInStock"></form:errors>
 					</div>
 				</div>
 				<div class="form-group">
@@ -83,6 +86,7 @@ tstrap.min.css">
 					</label>
 					<div class="col-lg-10">
 						<form:textarea id="description" path="description" rows="2" />
+						<form:errors cssClass="text-danger" path="description"></form:errors>
 					</div>
 				</div>
 				<div class="form-group">
