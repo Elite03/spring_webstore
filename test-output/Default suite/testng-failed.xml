@@ -3,11 +3,11 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="com.java.local.validatons.anno.validators.ProductIdValidator">
+      <class name="com.java.local.main.classic.spring.validator.UnitsInStockValidator">
         <methods>
-          <include name="checkIfValid"/>
+          <include name="testCase"/>
         </methods>
-      </class> <!-- com.java.local.validatons.anno.validators.ProductIdValidator -->
+      </class> <!-- com.java.local.main.classic.spring.validator.UnitsInStockValidator -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

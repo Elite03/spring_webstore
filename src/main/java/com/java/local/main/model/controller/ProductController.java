@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.java.local.main.classic.spring.validator.ProductValidator;
 import com.java.local.main.model.domain.Product;
 import com.java.local.main.model.domain.service.ProductService;
 import com.java.local.main.model.exception.NoProductFound;
@@ -33,7 +34,10 @@ import com.java.local.main.model.exception.NoProductFoundUnderCategory;
 public class ProductController {
 
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
+
+	@Autowired
+	private ProductValidator productValidator;
 
 	@RequestMapping(value = "/")
 	public String getAllProducts(Model model) {
@@ -98,6 +102,8 @@ public class ProductController {
 	public void initBinder(WebDataBinder binder) {
 		binder.setAllowedFields("productId", "name", "unitPrice", "description", "manufacturer", "category",
 				"unitsInStock", "condition", "productImage");
+		binder.setValidator(productValidator);
+
 	}
 
 	@ExceptionHandler(NoProductFound.class)
