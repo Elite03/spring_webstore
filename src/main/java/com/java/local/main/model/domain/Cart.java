@@ -11,38 +11,11 @@ public class Cart {
 
 	public Cart() {
 		cartItems = new HashMap<>();
-		grandTotal = BigDecimal.ZERO;
+		grandTotal = new BigDecimal(0);
 	}
 
 	public Cart(String cartId) {
 		this.cartId = cartId;
-	}
-
-	public void addCartItem(CartItem item) {
-		String productId = item.getProduct().getProductId();
-
-		if (cartItems.containsKey(productId)) {
-			CartItem existingProduct = cartItems.get(productId);
-			existingProduct.setQuantity(existingProduct.getQuantity() + item.getQuantity());
-			cartItems.put(productId, item);
-		} else {
-			cartItems.put(productId, item);
-		}
-		this.updateGrandTotal();
-
-	}
-
-	public void removeCartItem(CartItem item) {
-		String productId = item.getProduct().getProductId();
-		cartItems.remove(productId);
-		this.updateGrandTotal();
-	}
-
-	public void updateGrandTotal() {
-		grandTotal = new BigDecimal(0);
-		for (CartItem item : cartItems.values()) {
-			grandTotal = grandTotal.add(item.getTotalPrice());
-		}
 	}
 
 	public String getCartId() {
@@ -69,41 +42,29 @@ public class Cart {
 		this.grandTotal = grandTotal;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cartId == null) ? 0 : cartId.hashCode());
-		result = prime * result + ((cartItems == null) ? 0 : cartItems.hashCode());
-		result = prime * result + ((grandTotal == null) ? 0 : grandTotal.hashCode());
-		return result;
+	public void addCartItem(CartItem item) {
+		String productId = item.getProduct().getProductId();
+		if (this.cartItems.containsKey(productId)) {
+			CartItem existingCartItem = cartItems.get(productId);
+			existingCartItem.setQuantity(existingCartItem.getQuantity() + item.getQuantity());
+			this.cartItems.put(productId, existingCartItem);
+		} else
+			this.cartItems.put(productId, item);
+
+		this.updateGrandTotal();
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cart other = (Cart) obj;
-		if (cartId == null) {
-			if (other.cartId != null)
-				return false;
-		} else if (!cartId.equals(other.cartId))
-			return false;
-		if (cartItems == null) {
-			if (other.cartItems != null)
-				return false;
-		} else if (!cartItems.equals(other.cartItems))
-			return false;
-		if (grandTotal == null) {
-			if (other.grandTotal != null)
-				return false;
-		} else if (!grandTotal.equals(other.grandTotal))
-			return false;
-		return true;
+	public void removeCartItem(CartItem item) {
+		if (this.cartItems.containsKey(item.getProduct().getProductId()))
+			cartItems.remove(item);
+		this.updateGrandTotal();
+	}
+
+	public void updateGrandTotal() {
+		this.grandTotal = new BigDecimal(0);
+		for (CartItem item : this.cartItems.values()) {
+			grandTotal = grandTotal.add(item.getToatlPrice());
+		}
 	}
 
 }
