@@ -1,11 +1,11 @@
 package com.java.local.main.model.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +64,31 @@ public class CartRestController {
 		if (product == null)
 			throw new NoProductFound(productId);
 		cart.addCartItem(new CartItem(product));
+	}
+
+	@RequestMapping(value = "/remove/{productId}")
+	public void remveItem(@PathVariable("productId") String productId, HttpServletRequest request) {
+		String sessionId = request.getSession(true).getId();
+		Cart cart = cartService.read(sessionId);
+		if (cart == null) {
+			cart = cartService.create(new Cart(sessionId));
+		}
+		Product product = productService.getProductById(productId);
+		if (product == null) {
+			throw new IllegalArgumentException("NO product found for id " + productId);
+		}
+		cart.removeCartItem(new CartItem(product));
+		cartService.update(sessionId, cart);
+	}
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Illegal request please verify your payload")
+	public void handleClientError(Exception ex) {
+	}
+
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Internal Server Error")
+	public void handleServerErrors(Exception ex) {
 
 	}
 }
